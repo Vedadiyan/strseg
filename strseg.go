@@ -1,4 +1,4 @@
-package main
+package strseg
 
 import (
 	"fmt"
@@ -7,7 +7,11 @@ import (
 	"strings"
 )
 
-func CreateParser[T any]() func(str string, sep string) (*T, error) {
+type (
+	Parser[T any] func(string, string) (*T, error)
+)
+
+func CreateParser[T any]() Parser[T] {
 	value := new(T)
 	typeOfT := reflect.TypeOf(*value)
 	fieldLen := typeOfT.NumField()
